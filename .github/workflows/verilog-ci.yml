@@ -1,0 +1,36 @@
+name: Verilog CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Icarus Verilog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y iverilog
+
+      - name: Compile testbench
+        run: |
+          iverilog -g2012 -Wall -o sim.out pipe_tb.v
+
+      - name: Run simulation
+        run: |
+          vvp sim.out
+
+      - name: Upload VCD (if generated)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vcd
+          path: |
+            *.vcd
+            **/*.vcd
