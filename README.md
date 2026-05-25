@@ -52,8 +52,6 @@ beq
 common/       -> Shared hardware modules used by both processors
 sequential/   -> Sequential RV64I processor implementation
 pipelined/    -> 5-stage pipelined RV64I processor implementation
-reports/      -> Project reports and documentation
-outputs/      -> Simulation outputs and generated artifacts
 ```
 
 
